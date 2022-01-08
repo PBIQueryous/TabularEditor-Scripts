@@ -5,7 +5,7 @@ Tabular Editor 2 Scripts for PBI
 
 ```c#
 
- 
+  
 /*---------------------------------
 | Title:                           |
 | C# Tabular Editor - DAX template |
@@ -17,20 +17,26 @@ Tabular Editor 2 Scripts for PBI
  ---------------------------------*/
 
  /* SCRIPT NOTES 
+ *--------------------------------------------------*
+ | Inspiration and Credits:                         |
+ | PowerBI.Tips Team    |   https://powerbi.tips/   |
+ | Daniel Otykier       |   twitter.com/DOtykier    |
+ | and endless more names from the PBI community,   |
+ | Thank you all!                                   |
+ *--------------------------------------------------*
+ */
+
+ /* DESCRIPTION
  * -----------------------------------
- * Inspiration and Credits:           
- * PowerBI.Tips Team    |   https://powerbi.tips/
- * Daniel Otykier       |   twitter.com/DOtykier
- * and endless more names from the PBI community, thank you all!
- * -----------------------------------
- * Description:
  * This script, when executed, will loop through the currently selected measure(s),
  * creating a series of measure(s) declared in the script below.
+ * 
+ * e.g., from Model select [Measure] where Measure = SUM( tbl[column] ) or COUNT( tbl[column] )
  * -----------------------------------
- * C# measure formula template:
- * m.Table.AddMeasure( "MeasureName", "Expression", m.DisplayFolder);
- *
  */
+
+ // C# measure formula template:
+ // m.Table.AddMeasure( "MeasureName", "Expression", m.DisplayFolder);
 
 /**** C# SCRIPT START ****/
 
@@ -50,6 +56,7 @@ var Currency2 = GBP2+";" +"-"+GBP2+";" +GBP2;
 var Deviation = "+"+Decimal+";" +"-"+Decimal+";"+ Decimal;
 
 // Var RETURN text strings
+var vResult = "var _result = ";
 var rReturnRes = "RETURN" + '\n' + "_result";
 var rReturn = "RETURN" + '\n';
 var ifnotBlank = '\t' + "// IF(  NOT ISBLANK( ";
@@ -62,10 +69,8 @@ var snap = " | SNAP";
 // Var Measure Folder
 var subFolder = "_Measures\\SubFolder";
 
-// Script Variable
-// Creates a series of time intelligence measures for each selected measure, i.e. MeasureName = SUM( tbl[column] )
+// Script Variable: Creates a series of time intelligence measures for each selected measure in the Model
 foreach(var m in Selected.Measures) 
-
 {
  
 
@@ -84,12 +89,16 @@ foreach(var m in Selected.Measures)
         
 /* DAX expression START */
         // DAX Variables               
-        + '\n' + "VAR _result = " + m.DaxObjectName + '\n'
+        
         
         // Return Result
+        + '\n' + vResult + m.DaxObjectName + '\n'
         + '\n' + rReturn
-        + '\n' + ifnotBlank + m.DaxObjectName + thenResult
         + '\n' + rResult
+        
+        // optional in DAX
+        // useful in cumulative measures - returns blank if no value exists for future dates
+        + ifnotBlank + m.DaxObjectName + thenResult
         );
 /* DAX expression END */
         
