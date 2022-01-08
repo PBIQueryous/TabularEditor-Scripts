@@ -8,6 +8,8 @@ Complete Time Intelligence Series\
 ```c#
 
   
+
+  
 /*---------------------------------------------------
 | TITLE:                                             |
 | Time Intelligence Series                           |
@@ -94,8 +96,10 @@ foreach(var m in Selected.Measures)
         // DAX Variables               
         
         
-        // Return Result
+        // Result Expression Variable
         + '\n' + vResult + m.DaxObjectName + '\n'
+        
+        // Return Expression
         + '\n' + rReturn
         + '\n' + rResult
         
