@@ -1,31 +1,32 @@
 # Time Intelligence Series
-Complete Time Intelligence Series  
+Complete Time Intelligence Series\
 **NOTE: This script and the measures herein are dependent on my `Dates table` which you can find here:** `PQ DateTable`
+<br/>
 
 ## Tabular Editor Advanced Script
 
 ```c#
 
   
-/*--------------------------------------
-| Title:                                |
-| Tabular Editor Advanced Script        |
-| Time Intelligence                     |
- ---------------------------------------
-| Author:                               |
-| Imran Haq, PBI Queryous               |
-| https://github.com/PBIQueryous        |
-| STAY QUERYOUS PBIX CHAMPS!            |
- --------------------------------------*/
+/*---------------------------------------------------
+| TITLE:                                             |
+| Time Intelligence Series                           |
+| Tabular Editor Advanced Script                     |
+ ----------------------------------------------------
+| AUTHOR:                                            |
+| Imran Haq, PBI Queryous                            |
+| https://github.com/PBIQueryous                     |
+| STAY QUERYOUS PBIX CHAMPS!                         |
+ ---------------------------------------------------*/
 
  /* SCRIPT NOTES 
- *--------------------------------------------------*
- | Inspiration and Credits:                         |
- | PowerBI.Tips Team    |   https://powerbi.tips/   |
- | Daniel Otykier       |   twitter.com/DOtykier    |
- | and endless more names from the PBI community,   |
- | Thank you all!                                   |
- *--------------------------------------------------*
+ *---------------------------------------------------*
+ | Inspiration and Credits:                          |
+ | PowerBI.Tips Team    |   https://powerbi.tips/    |
+ | Daniel Otykier       |   twitter.com/DOtykier     |
+ | and endless more names from the PBI community,    |
+ | Thank you all!                                    |
+ *---------------------------------------------------*
  */
 
  /* DESCRIPTION
