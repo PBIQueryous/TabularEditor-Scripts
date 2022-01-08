@@ -5,27 +5,31 @@ Tabular Editor 2 Scripts for PBI
 
 ```c#
 
-/* SCRIPT NOTES
- *  ----------------------------------
- * | Title:                           |
- * | Time-intelligence Measure Series |
- *  ----------------------------------
- * | Author:                          |
- * | Imran Haq, PBI Queryous          |
- * | https://github.com/PBIQueryous   |
- *  ----------------------------------
+ 
+/*---------------------------------
+| Title:                           |
+| C# Tabular Editor - DAX template |
+ ----------------------------------
+| Author:                          |
+| Imran Haq, PBI Queryous          |
+| https://github.com/PBIQueryous   |
+| STAY QUERYOUS PBIX CHAMPS!       |
+ ---------------------------------*/
+
+ /* SCRIPT NOTES 
  * -----------------------------------
  * Inspiration and Credits:           
- * PowerBI.Tips Team, https://powerbi.tips/
- * Daniel Otykier, twitter.com/DOtykier,
- * and endless more names from the PBI community, thank you!
+ * PowerBI.Tips Team    |   https://powerbi.tips/
+ * Daniel Otykier       |   twitter.com/DOtykier
+ * and endless more names from the PBI community, thank you all!
  * -----------------------------------
  * Description:
- * This script, when executed, will loop through the currently selected columns,
- * creating a series of measure for each column and also hiding the column itself.
+ * This script, when executed, will loop through the currently selected measure(s),
+ * creating a series of measure(s) declared in the script below.
  * -----------------------------------
  * C# measure formula template:
  * m.Table.AddMeasure( "MeasureName", "Expression", m.DisplayFolder);
+ *
  */
 
 /**** C# SCRIPT START ****/
@@ -59,10 +63,13 @@ var snap = " | SNAP";
 var subFolder = "_Measures\\SubFolder";
 
 // Script Variable
-// Creates a series of time intelligence measures for each selected measure, i.e. SUM( tbl[column] )
+// Creates a series of time intelligence measures for each selected measure, i.e. MeasureName = SUM( tbl[column] )
 foreach(var m in Selected.Measures) 
 
-{   
+{
+ 
+
+ 
 /***************************************** MeasureStart ************************************/
 // Measure1: SUM
     var m1 = m.Table.AddMeasure
@@ -102,8 +109,10 @@ foreach(var m in Selected.Measures)
         ;
 // endSubScript
 /**************************************** MeasureEnd **************************************/
-}
 
+
+
+}
 /**** C# SCRIPT END ****/
 
 ```
