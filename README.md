@@ -25,11 +25,10 @@ Tabular Editor 2 Scripts for PBI
  * m.Table.AddMeasure( "MeasureName", "Expression", m.DisplayFolder);
  */
 
+/* SET VARIABLES */
+
 // Quotation Character - helpful for wrapping " " around a text string within the DAX code
 const string qt = "\"";
-
-// Var Measure Display Folder
-var subFolder = "TimeInt";
 
 // Number Formatting Strings
 var GBP = qt + "£" + qt;
@@ -38,6 +37,56 @@ var Percent = "0.0 %";
 var Decimal = "#,0.0";
 var Number = "#,0";
 var Currency = GBP + "#,0; -" + GBP + "#,0;" + GBP + "#,0";
+
+// Standard Date Variables - includes Date Columns and Text Strings
+var dateColumn = "Dates[Date]";
+var mtdColumn = "Dates[LatestMTD]";
+var endDate = "31/3";
+var endFY = qt + "31/3" + qt; 
+var datesYTD = ", DATESYTD( " + dateColumn + ", " + endFY + " ) ";
+
+// Fiscal Filter Date Variables
+var calcVarMinMTDFY = "VAR _min = CALCULATE( MIN( Dates[LatestMTD] ) , Dates[IsCFY] = TRUE)";
+var calcVarMaxMTDFY = "VAR _max = CALCULATE( MAX( Dates[LatestMTD] ) , Dates[IsCFY] = TRUE)";
+var calcVarMaxDateFY = "VAR _max = CALCULATE( MAX( Dates[Date] ) , Dates[IsCFY] = TRUE)";
+var calcVarMinMaxFY = calcVarMinMTDFY + '\n' + calcVarMaxMTDFY; 
+var beforeVarMax = dateColumn + " <= _max ";
+var beforeVarYtd = dateColumn + " <= _ytd ";
+var betweenVarFY = dateColumn + " >= _min " + "&& " + dateColumn + " <= _max ";
+
+// Filtered Date Variables
+var calcMaxMTD = "CALCULATE( MAX( Dates[LatestMTD] ) , REMOVEFILTERS ()) ";
+var calcVarMaxMTD = "VAR _ytd = CALCULATE( MAX( Dates[LatestMTD] ) /* , REMOVEFILTERS () */ ) ";
+var calcVarMaxMTDremoveFilter = "VAR _YtD = CALCULATE( MAX( Dates[LatestMTD] ) , REMOVEFILTERS ()) ";
+var calcVarMaxDate = "VAR _max = CALCULATE( MAX( Dates[Date] ) /* , Dates[IsCFY] = TRUE */ )";
+
+var calcVarMaxYTD1 = "VAR _ytd1 = CALCULATE( MAX( Dates[MTDAdd1] ) , Dates[IsCFY] = TRUE)";
+var calcVarMaxYTD2 = "VAR _ytd2 = CALCULATE( MAX( Dates[MTDAdd2] ) , Dates[IsCFY] = TRUE)";
+var calcVarMaxYTD3 = "VAR _ytd3 = CALCULATE( MAX( Dates[MTDAdd3] ) , Dates[IsCFY] = TRUE)";
+
+// Text Fillers for Measure Templates
+var mMeasure = qt + "[MeasureName]" + qt;
+var mActual = qt + "[Actual]" + qt;
+var mPlan = qt + "[Plan]" + qt;
+
+// MeasureName Variables
+var sum = " | SUM";
+var snap = " | SNAP";
+var ytdSnap = " | YTD SNAP";
+var efy = " | EFY SNAP";
+var efyCML = " | EFY CML";
+var cml = " | CML";
+var fytdCML = " | YTD CML";
+var fytd = " | FYTD";
+var rem = " | REM";
+
+// Var RETURN text strings
+var rReturnRes = "RETURN" + '\n' + "_result";
+var rReturn = "RETURN" + '\n';
+var rResult = "_result";
+
+// Var Measure Folder
+var subFolder = "TimeInt";
 
 // Script Variable
 // Creates a series of time intelligence measures for each selected (base SUM) measure:
