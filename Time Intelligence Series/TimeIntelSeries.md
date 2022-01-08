@@ -1,6 +1,6 @@
 # Time Intelligence Series
-Complete Time Intelligence Series
-**NOTE: This script and there measures therein are dependent on my Dates table which you can find here:** `PQ DateTable`
+Complete Time Intelligence Series  
+**NOTE: This script and the measures herein are dependent on my `Dates table` which you can find here:** `PQ DateTable`
 
 ## Tabular Editor Advanced Script
 
