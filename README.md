@@ -13,8 +13,9 @@ Tabular Editor 2 Scripts for PBI
  *  ----------------------------------
  * -----------------------------------
  * Inspiration and Credits:           
- * PowerBI.Tips Team, 
+ * PowerBI.Tips Team, https://powerbi.tips/
  * Daniel Otykier, twitter.com/DOtykier,
+ * and endless more names from the PBI community, thank you!
  * -----------------------------------
  * Description:
  * This script, when executed, will loop through the currently selected columns,
@@ -24,8 +25,19 @@ Tabular Editor 2 Scripts for PBI
  * m.Table.AddMeasure( "MeasureName", "Expression", m.DisplayFolder);
  */
 
-// Var Measure Folder
+// Quotation Character - helpful for wrapping " " around a text string within the DAX code
+const string qt = "\"";
+
+// Var Measure Display Folder
 var subFolder = "TimeInt";
+
+// Number Formatting Strings
+var GBP = qt + "£" + qt;
+var Whole = "#,0";
+var Percent = "0.0 %";
+var Decimal = "#,0.0";
+var Number = "#,0";
+var Currency = GBP + "#,0; -" + GBP + "#,0;" + GBP + "#,0";
 
 // Script Variable
 // Creates a series of time intelligence measures for each selected (base SUM) measure:
@@ -37,6 +49,7 @@ foreach(var m in Selected.Measures)
 // Measure1: SUM
     var m1 = m.Table.AddMeasure
     (                             
+
 // startSubScript
         // MeasureName
         m.Name + sum,                               
