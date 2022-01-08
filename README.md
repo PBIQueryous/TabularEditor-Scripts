@@ -2,7 +2,9 @@
 Tabular Editor 2 Scripts for PBI
 
 ## Template
+
 ```c#
+
 /* SCRIPT NOTES
  *  ----------------------------------
  * | Title:                           |
@@ -10,6 +12,7 @@ Tabular Editor 2 Scripts for PBI
  *  ----------------------------------
  * | Author:                          |
  * | Imran Haq, PBI Queryous          |
+ * | https://github.com/PBIQueryous   |
  *  ----------------------------------
  * -----------------------------------
  * Inspiration and Credits:           
@@ -25,75 +28,41 @@ Tabular Editor 2 Scripts for PBI
  * m.Table.AddMeasure( "MeasureName", "Expression", m.DisplayFolder);
  */
 
-/* SET VARIABLES */
+/**** C# SCRIPT START ****/
 
+// SET VARIABLES
 // Quotation Character - helpful for wrapping " " around a text string within the DAX code
 const string qt = "\"";
 
 // Number Formatting Strings
-var GBP = qt + "£" + qt;
+var GBP0 = qt + "£" + qt + "#,0.0";
+var GBP2 = qt + "£" + qt + "#,0.00";
 var Whole = "#,0";
 var Percent = "0.0 %";
 var Decimal = "#,0.0";
 var Number = "#,0";
-var Currency = GBP + "#,0; -" + GBP + "#,0;" + GBP + "#,0";
-
-// Standard Date Variables - includes Date Columns and Text Strings
-var dateColumn = "Dates[Date]";
-var mtdColumn = "Dates[LatestMTD]";
-var endDate = "31/3";
-var endFY = qt + "31/3" + qt; 
-var datesYTD = ", DATESYTD( " + dateColumn + ", " + endFY + " ) ";
-
-// Fiscal Filter Date Variables
-var calcVarMinMTDFY = "VAR _min = CALCULATE( MIN( Dates[LatestMTD] ) , Dates[IsCFY] = TRUE)";
-var calcVarMaxMTDFY = "VAR _max = CALCULATE( MAX( Dates[LatestMTD] ) , Dates[IsCFY] = TRUE)";
-var calcVarMaxDateFY = "VAR _max = CALCULATE( MAX( Dates[Date] ) , Dates[IsCFY] = TRUE)";
-var calcVarMinMaxFY = calcVarMinMTDFY + '\n' + calcVarMaxMTDFY; 
-var beforeVarMax = dateColumn + " <= _max ";
-var beforeVarYtd = dateColumn + " <= _ytd ";
-var betweenVarFY = dateColumn + " >= _min " + "&& " + dateColumn + " <= _max ";
-
-// Filtered Date Variables
-var calcMaxMTD = "CALCULATE( MAX( Dates[LatestMTD] ) , REMOVEFILTERS ()) ";
-var calcVarMaxMTD = "VAR _ytd = CALCULATE( MAX( Dates[LatestMTD] ) /* , REMOVEFILTERS () */ ) ";
-var calcVarMaxMTDremoveFilter = "VAR _YtD = CALCULATE( MAX( Dates[LatestMTD] ) , REMOVEFILTERS ()) ";
-var calcVarMaxDate = "VAR _max = CALCULATE( MAX( Dates[Date] ) /* , Dates[IsCFY] = TRUE */ )";
-
-var calcVarMaxYTD1 = "VAR _ytd1 = CALCULATE( MAX( Dates[MTDAdd1] ) , Dates[IsCFY] = TRUE)";
-var calcVarMaxYTD2 = "VAR _ytd2 = CALCULATE( MAX( Dates[MTDAdd2] ) , Dates[IsCFY] = TRUE)";
-var calcVarMaxYTD3 = "VAR _ytd3 = CALCULATE( MAX( Dates[MTDAdd3] ) , Dates[IsCFY] = TRUE)";
-
-// Text Fillers for Measure Templates
-var mMeasure = qt + "[MeasureName]" + qt;
-var mActual = qt + "[Actual]" + qt;
-var mPlan = qt + "[Plan]" + qt;
-
-// MeasureName Variables
-var sum = " | SUM";
-var snap = " | SNAP";
-var ytdSnap = " | YTD SNAP";
-var efy = " | EFY SNAP";
-var efyCML = " | EFY CML";
-var cml = " | CML";
-var fytdCML = " | YTD CML";
-var fytd = " | FYTD";
-var rem = " | REM";
+var Currency0 = GBP0+";" +"-"+GBP0+";" +GBP0;
+var Currency2 = GBP2+";" +"-"+GBP2+";" +GBP2;
+var Deviation = "+"+Decimal+";" +"-"+Decimal+";"+ Decimal;
 
 // Var RETURN text strings
 var rReturnRes = "RETURN" + '\n' + "_result";
 var rReturn = "RETURN" + '\n';
-var rResult = "_result";
+var ifnotBlank = '\t' + "// IF(  NOT ISBLANK( ";
+var thenResult = " ) ,  _result  )";
+var rResult = '\t' + "_result";
+
+// MeasureName Variables
+var snap = " | SNAP";
 
 // Var Measure Folder
-var subFolder = "TimeInt";
+var subFolder = "_Measures\\SubFolder";
 
 // Script Variable
-// Creates a series of time intelligence measures for each selected (base SUM) measure:
+// Creates a series of time intelligence measures for each selected measure, i.e. SUM( tbl[column] )
 foreach(var m in Selected.Measures) 
 
-{   // SCRIPT START
-    
+{   
 /***************************************** MeasureStart ************************************/
 // Measure1: SUM
     var m1 = m.Table.AddMeasure
@@ -101,20 +70,19 @@ foreach(var m in Selected.Measures)
 
 // startSubScript
         // MeasureName
-        m.Name + sum,                               
+        m.Name + snap,                               
     
         // DAX comment string
-        '\n' + "// Base SUM "                           
+        '\n' + "// snapshot - basic sum "                           
         
 /* DAX expression START */
-        // DAX Variables
-        + '\n' + '\n' + calcVarMaxDateFY                
-        + '\n' + "VAR _result = CALCULATE( " + m.DaxObjectName + " ) " + '\n'
+        // DAX Variables               
+        + '\n' + "VAR _result = " + m.DaxObjectName + '\n'
         
         // Return Result
         + '\n' + rReturn
-        + '\n' + '\t' + "// IF(  NOT ISBLANK( " + m.DaxObjectName + " ) ,  _result  )"
-        + '\n' + '\t' + rResult
+        + '\n' + ifnotBlank + m.DaxObjectName + thenResult
+        + '\n' + rResult
         );
 /* DAX expression END */
         
@@ -126,13 +94,16 @@ foreach(var m in Selected.Measures)
         ;      
     
 // Provide some documentation
-        m1.Description = "Derived from " + m.Name + ": " + 
+        m1.Description = "From: " + m.Name + " - " + '\n' +
         // Type metadata text here
-        "Base Measure - End for Year, no filters."
+        "base measure; basic sum; forms the reference to subsequent time-intelligence measures"
         ;                             
-        m1.FormatString = Currency
+        m1.FormatString = Currency2
         ;
 // endSubScript
 /**************************************** MeasureEnd **************************************/
-}     // SCRIPT END
+}
+
+/**** C# SCRIPT END ****/
+
 ```
