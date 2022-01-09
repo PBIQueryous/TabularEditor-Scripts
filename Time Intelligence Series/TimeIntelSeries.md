@@ -8,13 +8,17 @@
 You can find the complete M-code for my `Dates Table` here:** [Dates Table](https://github.com/PBIQueryous/M-Code/tree/main/Calendars)  
 
 This C# script for Tabular Editor, when executed, will produce the following set of time-intelligence measures:
-
+  
 - Snapshot
 - Cumulative
 - Current Year to Date
 - Current Fiscal Year to Date
 - Current Year to Date Cumulative
 - Current Fiscal Year to Date Cumulative
+
+<br/>
+
+#### Measure List
 
 | Abbreviation | Full Name |
 | --- | --- |
@@ -25,8 +29,11 @@ This C# script for Tabular Editor, when executed, will produce the following set
 | CYTD CML | Current Year to Date Cumulative |
 | CFYTD CM | Current Fiscal Year to Date Cumulative |
 
+<br/>
 
-
+## C# Script
+**Bonus metadata options: in-code comments, display folder, measure description & format string** 
+**C# script variables allow for DAX code customisation according to your requirements and __hopefully__ easier reading experience... hopefully :P**
 ```c#
 
   
