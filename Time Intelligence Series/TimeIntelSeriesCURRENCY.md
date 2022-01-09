@@ -34,11 +34,14 @@ This C# script for Tabular Editor, when executed, will produce the following set
 <br/>
 
 ## C# Script
+**TL;DR;NB: The following script is formatted for CURRENCY**\
 **Bonus metadata options: in-code comments, display folder, measure description & format string** 
 **C# script variables allow for DAX code customisation according to your requirements and _hopefully_ makes for an easier reading experience... hopefully :P**
 ```c#
 
   
+  
+
   
 /*---------------------------------------------------
 | TITLE:                                             |
@@ -80,7 +83,7 @@ This C# script for Tabular Editor, when executed, will produce the following set
 const string qt = "\"";
 
 // Number Formatting Strings
-var GBP0 = qt + "£" + qt + "#,0.0";
+var GBP0 = qt + "£" + qt + "#,0";
 var GBP2 = qt + "£" + qt + "#,0.00";
 var Whole = "#,0";
 var Percent = "0.0 %";
@@ -106,6 +109,8 @@ var cfytd = " | CFYTD";
 var cytdCml = " | CYTD CML";
 var cfytdCml = " | CFYTD CML";
 var rem = " | REM";
+
+
 
 // TimeIntel Variable Filters
 var datesDate = "Dates[Date]";
@@ -457,7 +462,7 @@ foreach(var m in Selected.Measures)
         "CALCULATE( [" + m.Name + snap + "], "                              // calculate
         // filter context
         + '\n' + '\t' + 
-        "KEEPFILTERS( " + datesDate + " >= " + mtdDate + "))"               // filter
+        "KEEPFILTERS( " + datesDate + " > " + mtdDate + "))"               // filter
         + '\n'
         
         // Return Expression
@@ -483,6 +488,61 @@ foreach(var m in Selected.Measures)
 /**************************************** MeasureEnd **************************************/
 
 
+/***************************************** MeasureStart ************************************/
+// Measure8: Actual and Future
+    var m8 = m.Table.AddMeasure
+    (                             
+
+// startSubScript
+        // MeasureName
+        m.Name + " & Forecast | YTD",                               
+    
+        // DAX comment string
+        '\n' + 
+        "// actual YTD and remaining future values " 
+        + '\n'
+        
+/* DAX expression START */
+        // DAX Variables               
+        + varlatestMTD 
+        + '\n' + 
+        "var _actual = ["  + m.Name + snap + "]"
+        + '\n' + 
+        "var _forecast = " 
+        + '\n' + '\t' +
+        "CALCULATE( [forecastMEASURE], -- eg: Forecast, Budget, Plan etc"
+        + '\n' + '\t' + '\t' +
+        "KEEPFILTERS( " + datesDate + " > " + mtdDate + "))"
+        // Result Expression Variable
+        + '\n' + vResult + '\n' + 
+        
+        // DAX Result Expression
+        " _actual + _forecast"                                              // calculate
+        + '\n'
+        
+        // Return Expression
+        + '\n' + rReturnResult
+        );
+/* DAX expression END */
+        
+// Metadata
+        // Display Folder (default - same folder as selected)
+        m8.DisplayFolder 
+        // Optional: new Folder name below
+        = subFolder
+        ;      
+    
+// Provide some documentation
+        m8.Description = "From: " + m.Name + " - " + '\n' +
+        // Type metadata text here
+        "actual YTD and future forecast"
+        ;                             
+        m8.FormatString = Currency0
+        ;
+// endSubScript
+/**************************************** MeasureEnd **************************************/
+
 }
 /**** C# SCRIPT END ****/
+
 ```
