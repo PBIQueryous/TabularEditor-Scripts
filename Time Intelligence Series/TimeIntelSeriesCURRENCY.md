@@ -36,9 +36,6 @@ This C# script for Tabular Editor, when executed, will produce the following set
 **C# script variables allow for DAX code customisation according to your requirements and _hopefully_ makes for an easier reading experience... hopefully :P**
 ```c#
 
-  
-  
-
 
   
 /*---------------------------------------------------
@@ -53,13 +50,18 @@ This C# script for Tabular Editor, when executed, will produce the following set
  ---------------------------------------------------*/
 
  /* SCRIPT NOTES 
- *---------------------------------------------------*
- | Inspiration and Credits:                          |
- | PowerBI.Tips Team    |   https://powerbi.tips/    |
- | Daniel Otykier       |   twitter.com/DOtykier     |
- | and endless more names from the PBI community,    |
- | Thank you all!                                    |
- *---------------------------------------------------*
+ *-----------------------------------------------------*
+ | Inspiration and Credits:                            |
+ | PowerBI.Tips Team    |   powerbi.tips/              |
+ | Mike Carlo           |   twitter.com/Mike_R_Carlo   |
+ | Seth Bauer           |   twitter.com/Seth_C_Bauer   |
+ | Tommy Puglia         |   twitter.com/tommypuglia    |
+ | Daniel Otykier       |   twitter.com/DOtykier       |
+ | Enterprise DNA       |   twitter.com/_enterprisedna |
+ | Imke Feldmann        |   twitter.com/thebiccountant |
+ | and endless more names from the PBI community,      |
+ | Thank you all!                                      |
+ *-----------------------------------------------------*
  */
 
  /* DESCRIPTION
@@ -654,6 +656,8 @@ foreach(var m in Selected.Measures)
 
 }
 /**** C# SCRIPT END ****/
+
+
 
 
 ```
