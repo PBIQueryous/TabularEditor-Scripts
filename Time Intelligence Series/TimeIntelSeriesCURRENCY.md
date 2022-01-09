@@ -43,6 +43,7 @@ This C# script for Tabular Editor, when executed, will produce the following set
   
   
 
+
   
 /*---------------------------------------------------
 | TITLE:                                             |
@@ -515,7 +516,9 @@ foreach(var m in Selected.Measures)
         + '\n' + '\t' + '\t' +
         "KEEPFILTERS( " + datesDate + " > " + mtdDate + "))"
         // Result Expression Variable
-        + '\n' + vResult + '\n' + 
+        + '\n' + 
+        vResult
+         + '\n' + 
         
         // DAX Result Expression
         " _actual + _forecast"                                              // calculate
@@ -543,7 +546,118 @@ foreach(var m in Selected.Measures)
 // endSubScript
 /**************************************** MeasureEnd **************************************/
 
+
+/***************************************** MeasureStart ************************************/
+// Measure9: Actual & Forecast CML
+    var m9 = m.Table.AddMeasure
+    (                             
+
+// startSubScript
+        // MeasureName
+        m.Name + " & Forecast | CML",                               
+    
+        // DAX comment string
+        '\n' + 
+        "// actual YTD and remaining future values cumulative totals " 
+        + '\n'
+        
+/* DAX expression START */
+        // DAX Variables               
+        + '\n' + vardatesDate
+        
+        // Result Expression Variable
+        + '\n' + vResult + 
+        
+        // DAX Expression
+        "CALCULATE( [" + m.Name + " & Forecast | YTD" + "], "          // calculate
+        // filter context
+        + datesDate + " <= " + maxDate + " )"                           // filter
+         + '\n'     
+        
+        // Return Expression
+        + '\n' + rReturnResult
+        
+        // optional in DAX
+        // useful in cumulative measures - returns blank if no value exists for future dates
+        + '\n' + ifnotBlank + m.DaxObjectName + thenResult
+        );
+/* DAX expression END */
+        
+// Metadata
+        // Display Folder (default - same folder as selected)
+        m9.DisplayFolder 
+        // Optional: new Folder name below
+        = subFolder
+        ;      
+    
+// Provide some documentation
+        m9.Description = "From: " + m.Name + " - " + '\n' +
+        // Type metadata text here
+        "cumulative measure; continuous until max calendar date"
+        ;                             
+        m9.FormatString = Currency0
+        ;
+// endSubScript
+/**************************************** MeasureEnd **************************************/
+
+
+/***************************************** MeasureStart ************************************/
+// Measure10: Actual & Forecast CFYTD CML
+    var m10 = m.Table.AddMeasure
+    (                             
+
+// startSubScript
+        // MeasureName
+        m.Name + " & Forecast | CFYTD CML",                               
+    
+        // DAX comment string
+        '\n' + "// current fiscal year to date of " + m.Name + " & Forecast | YTD" + '\n'
+        
+/* DAX expression START */
+        // DAX Variables               
+        + varmaxdatesCFY 
+        
+        // Result Expression Variable
+        + '\n' + vResult + '\n' + 
+        
+        // DAX Expression
+        "CALCULATE( [" + m.Name + " & Forecast | YTD" + "], "                              // calculate
+        // filter context
+        + '\n' + '\t' + datesFiscal + ", " + '\n' +                         // filter
+        "// optional filter:" +'\n' +
+        "/* turn on = upto current fiscal year only"+ '\n' +
+        " * turn off = all fiscal years */"
+        + '\n' + '\t' + datesDate + " <= " + maxDate + ")"
+        
+        // Return Expression
+        + '\n' + rReturnResult
+        
+        // optional in DAX
+        // useful in cumulative measures - returns blank if no value exists for future dates
+        + '\n' + ifnotBlank + m.DaxObjectName + thenResult
+        );
+/* DAX expression END */
+        
+// Metadata
+        // Display Folder (default - same folder as selected)
+        m10.DisplayFolder 
+        // Optional: new Folder name below
+        = subFolder
+        ;      
+    
+// Provide some documentation
+        m10.Description = "From: " + m.Name + " & Forecast | YTD" + " - " + '\n' +
+        // Type metadata text here
+        "current fiscal year to date, latest YTD is up to date today"
+        ;                             
+        m10.FormatString = Currency0
+        ;
+// endSubScript
+/**************************************** MeasureEnd **************************************/
+
+
 }
 /**** C# SCRIPT END ****/
+
 
 ```
