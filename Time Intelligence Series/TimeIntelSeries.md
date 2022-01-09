@@ -33,7 +33,7 @@ This C# script for Tabular Editor, when executed, will produce the following set
 
 ## C# Script
 **Bonus metadata options: in-code comments, display folder, measure description & format string** 
-**C# script variables allow for DAX code customisation according to your requirements and __hopefully__ easier reading experience... hopefully :P**
+**C# script variables allow for DAX code customisation according to your requirements and _hopefully_ makes for an easier reading experience... hopefully :P**
 ```c#
 
   
