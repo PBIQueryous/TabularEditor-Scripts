@@ -8,14 +8,6 @@
 You can find the complete M-code for my `Dates Table` here:** [Dates Table](https://github.com/PBIQueryous/M-Code/tree/main/Calendars)  
 
 This C# script for Tabular Editor, when executed, will produce the following set of time-intelligence measures:
-  
-- Snapshot
-- Cumulative
-- Current Year to Date
-- Current Fiscal Year to Date
-- Current Year to Date Cumulative
-- Current Fiscal Year to Date Cumulative
-- Remaining Future Values
 
 <br/>
 
@@ -30,6 +22,10 @@ This C# script for Tabular Editor, when executed, will produce the following set
 | CYTD CML | Current Year to Date Cumulative |
 | CFYTD CML | Current Fiscal Year to Date Cumulative |
 | REM | Remaining Future Values |
+| Actual & Forecast YTD | as named Year to Date |
+| Actual & Forecast CML | as named Cumulative |
+| Actual & Forecast FYTD CML | as named Fiscal Year to Date Cumulative |
+
 
 <br/>
 
