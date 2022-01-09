@@ -15,6 +15,7 @@ This C# script for Tabular Editor, when executed, will produce the following set
 - Current Fiscal Year to Date
 - Current Year to Date Cumulative
 - Current Fiscal Year to Date Cumulative
+- Remaining Future Values
 
 <br/>
 
@@ -28,6 +29,7 @@ This C# script for Tabular Editor, when executed, will produce the following set
 | CFYTD | Current Fiscal Year to Date |
 | CYTD CML | Current Year to Date Cumulative |
 | CFYTD CML | Current Fiscal Year to Date Cumulative |
+| REM | Remaining Future Values |
 
 <br/>
 
@@ -36,6 +38,7 @@ This C# script for Tabular Editor, when executed, will produce the following set
 **C# script variables allow for DAX code customisation according to your requirements and _hopefully_ makes for an easier reading experience... hopefully :P**
 ```c#
 
+  
   
 /*---------------------------------------------------
 | TITLE:                                             |
@@ -102,6 +105,7 @@ var cytd = " | CYTD";
 var cfytd = " | CFYTD";
 var cytdCml = " | CYTD CML";
 var cfytdCml = " | CFYTD CML";
+var rem = " | REM";
 
 // TimeIntel Variable Filters
 var datesDate = "Dates[Date]";
@@ -113,7 +117,7 @@ var curDate = "_curDate";
 var mtdDate = "_ytd";
 var vardatesDate = "var " +maxDate+ " = MAX( " + datesDate + " )";
 var varlatestMTD = "var "+mtdDate+ " = CALCULATE( MAX( " +datesMTD+ " ), REMOVEFILTERS())";
-var varmaxdatesCFY = "var " +maxDate+ " = CALCULATE( MAX( " +datesDate+ "), " + isCFY + " )"; 
+var varmaxdatesCFY = "var " +maxDate+ " = CALCULATE( MAX( " +datesDate+ "), " + isCFY + " )";
 var fiscalyear = qt+"31/3"+qt;
 var datesFiscal = "DATESYTD (" + datesDate + "," + fiscalyear + " )";
 // Var Measure Folder
@@ -425,6 +429,55 @@ foreach(var m in Selected.Measures)
         "current fiscal year to date, latest YTD is up to date today"
         ;                             
         m6.FormatString = Currency0
+        ;
+// endSubScript
+/**************************************** MeasureEnd **************************************/
+
+
+/***************************************** MeasureStart ************************************/
+// Measure7: REM
+    var m7 = m.Table.AddMeasure
+    (                             
+
+// startSubScript
+        // MeasureName
+        m.Name + rem,                               
+    
+        // DAX comment string
+        '\n' + "// remaining future values " + m.Name + snap + '\n'
+        
+/* DAX expression START */
+        // DAX Variables               
+        + varlatestMTD 
+        
+        // Result Expression Variable
+        + '\n' + vResult + '\n' + 
+        
+        // DAX Expression
+        "CALCULATE( [" + m.Name + snap + "], "                              // calculate
+        // filter context
+        + '\n' + '\t' + 
+        "KEEPFILTERS( " + datesDate + " >= " + mtdDate + "))"               // filter
+        + '\n'
+        
+        // Return Expression
+        + '\n' + rReturnResult
+        );
+/* DAX expression END */
+        
+// Metadata
+        // Display Folder (default - same folder as selected)
+        m7.DisplayFolder 
+        // Optional: new Folder name below
+        = subFolder
+        ;      
+    
+// Provide some documentation
+        m7.Description = "From: " + m.Name + " - " + '\n' +
+        // Type metadata text here
+        "remaining future values beyond the latest complete MTD"
+        ;                             
+        m7.FormatString = Currency0
         ;
 // endSubScript
 /**************************************** MeasureEnd **************************************/
