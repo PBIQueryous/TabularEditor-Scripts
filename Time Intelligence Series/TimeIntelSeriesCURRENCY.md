@@ -34,7 +34,7 @@ This C# script for Tabular Editor, when executed, will produce the following set
 <br/>
 
 ## C# Script
-**TL;DR;NB: The following script is formatted for CURRENCY**\
+**TL;DR\ The following script is formatted for CURRENCY**\
 **Bonus metadata options: in-code comments, display folder, measure description & format string** 
 **C# script variables allow for DAX code customisation according to your requirements and _hopefully_ makes for an easier reading experience... hopefully :P**
 ```c#
