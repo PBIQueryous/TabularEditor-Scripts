@@ -27,7 +27,7 @@ This C# script for Tabular Editor, when executed, will produce the following set
 | CYTD | Current Year to Date |
 | CFYTD | Current Fiscal Year to Date |
 | CYTD CML | Current Year to Date Cumulative |
-| CFYTD CM | Current Fiscal Year to Date Cumulative |
+| CFYTD CML | Current Fiscal Year to Date Cumulative |
 
 <br/>
 
