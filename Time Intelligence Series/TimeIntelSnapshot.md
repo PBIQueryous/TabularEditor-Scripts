@@ -1,5 +1,5 @@
-# Time Intelligence Series
-Complete Time Intelligence Series\
+# Time Intelligence | Snaphot
+Time Intelligence single measure - Snapshot \
 **NOTE: This script and the measures herein are dependent on my `Dates table` which you can find here:** `PQ DateTable`
 <br/>
 
