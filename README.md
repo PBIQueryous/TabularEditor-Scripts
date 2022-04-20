@@ -54,6 +54,7 @@ var Number = "#,0";
 var Currency0 = GBP0+";" +"-"+GBP0+";" +GBP0;
 var Currency2 = GBP2+";" +"-"+GBP2+";" +GBP2;
 var Deviation = "+"+Decimal+";" +"-"+Decimal+";"+ Decimal;
+var Variance = "▲ 0.0%;▼ 0.0%;0.0%"
 
 // Var RETURN text strings
 var vResult = "var _result = ";
