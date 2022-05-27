@@ -40,11 +40,12 @@
  // C# measure formula template:
  // m.Table.AddMeasure( "MeasureName", "Expression", m.DisplayFolder);
 
-/**** C# SCRIPT START ****/
+/****------------------ C# SCRIPT START ------------------****/
 
 // SET VARIABLES
 // Quotation Character - helpful for wrapping " " around a text string within the DAX code
 const string qt = "\"";
+const string switchOFF = "// ";
 
 // Number Formatting Strings
 var GBP0 = qt + "£" + qt + "#,0";
@@ -57,17 +58,6 @@ var Currency0 = GBP0+";" +"-"+GBP0+";" +GBP0;
 var Currency2 = GBP2+";" +"-"+GBP2+";" +GBP2;
 var Deviation = "+"+Decimal+";" +"-"+Decimal+";"+ Decimal;
 
-// Var RETURN text strings
-var vResult = "var _result = ";
-var rResult = '\t' + "_result";
-var rReturnResult = "RETURN" + '\n' + '\t' + "_result";
-var rReturn = "RETURN" + '\n';
-var rReturnA1 = rReturn + '\n' + "// " + rResult;
-var rReturnA2 = rReturn + '\n' + rResult;
-var ifnotBlank = '\t' + "IF(  NOT ISBLANK( ";
-var thenResult = " ) ,  _result  )";
-
-
 // MeasureName Variables
 var snap = " | SNAP";
 var cml = " | CML";
@@ -79,7 +69,6 @@ var cytdCml = " | CYTD CML";
 var cfytdCml = " | CFYTD CML";
 var rem = " | REM";
 var calculate = "CALCULATE( ";
-
 
 // TimeIntel Variable Filters
 var datesDate = "_Dates[Date]";
@@ -95,19 +84,32 @@ var varmaxdatesCFY = "var " +maxDate+ " = CALCULATE( MAX( " +datesDate+ "), " + 
 var fiscalyear = qt+"31/3"+qt;
 var datesFiscal = "DATESYTD (" + datesDate + "," + fiscalyear + " )";
 
-
-
+/*----------------------------------------------------------------------*/
 // Script Variable: Creates a series of time intelligence measures for each selected measure in the Model
 foreach(var m in Selected.Measures) 
-{
- 
+
+{ /**** C# SCRIPT START ****/
+
+// Var RETURN text strings
+var vResult = "var _result = ";
+var rResult = '\t' + "_result";
+var rReturnResult = "RETURN" + '\n' + '\t' + "_result";
+var rReturn = "RETURN" + '\n';
+var rReturnA1 = rReturn + '\n' + "// " + rResult;
+var rReturnA2 = rReturn + '\n' + rResult;
+var ifnotBlank = '\t' + "IF(  NOT ISBLANK( ";
+var thenResult = " ) ,  _result  )";
+
+
+    
 // Expression Strings
 var selectedMeasure = m.Name;
 var measureName = m.DaxObjectName;
-var resultLine = '\n' + vResult + measureName + '\n';
-var returnLineA = '\n' + rReturn + '\n' + "// " + rResult + '\n' + ifnotBlank + measureName + thenResult;
-var returnLineB = '\n' + rReturn + '\n' + rResult + '\n' + "// " + ifnotBlank + measureName + thenResult;
 
+// RETURN AND RESULT STRINGS
+var resultLine = '\n' + vResult + measureName + '\n';
+var returnLineA = '\n' + rReturn + '\n' + switchOFF + rResult + '\n' + ifnotBlank + measureName + thenResult;
+var returnLineB = '\n' + rReturn + '\n' + rResult + '\n' + switchOFF + ifnotBlank + measureName + thenResult;
 
 // Metadata Strings
 var descriptionString = "From: " + selectedMeasure + " - " + '\n';
@@ -118,7 +120,7 @@ var subFolder = "_Measures\\SubFolder";
     var m1 = m.Table.AddMeasure
     (                             
 
-// startSubScript
+/* -- start SubScript -- */
         
         // MeasureName
         selectedMeasure + snap,                               
@@ -133,28 +135,43 @@ var subFolder = "_Measures\\SubFolder";
         + resultLine
         
         // Return Expression
-        + returnVariableA
+        + returnLineA
         
         );
         
 /* --  DAX expression END -- */
         
 // Metadata
+        
         // Display Folder (default - same folder as selected)
         m1.DisplayFolder 
+        
         // Optional: new Folder name below
         = subFolder
         ;      
     
 // Provide some documentation
+        
+        // Measure Description (edit variable above)
         m1.Description = descriptionString +
+        
         // Type metadata text here
         " Base Measure; SUM (Snapshot) "
         ;                             
+        
+        // Numeric Formatting
         m1.FormatString = Decimal
         ;
-// endSubScript
+
+/* -- end SubScript -- */
+
 /**************************************** MeasureEnd **************************************/
+
 }
-/**** C# SCRIPT END ****/
+
+/****------------------ C# SCRIPT START ------------------****/
+
+
+
+
 ```
