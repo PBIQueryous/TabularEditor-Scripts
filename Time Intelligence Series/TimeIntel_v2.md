@@ -2,6 +2,9 @@
 
 ```c#
 
+
+
+  
 /*---------------------------------------------------
 | TITLE:                                             |
 | Time Intelligence Series                           |
@@ -621,7 +624,7 @@ foreach(var m in Selected.Measures)
 
 /***************************************** MeasureStart ************************************/
 // Measure11: YTD
-    var m3 = m.Table.AddMeasure
+    var m11 = m.Table.AddMeasure
     (                             
 
 // startSubScript
@@ -654,24 +657,24 @@ foreach(var m in Selected.Measures)
         
 // Metadata
         // Display Folder (default - same folder as selected)
-        m3.DisplayFolder 
+        m11.DisplayFolder 
         // Optional: new Folder name below
         = subFolder
         ;      
     
 // Provide some documentation
-        m3.Description = "From: " + m.Name + " - " + '\n' +
+        m11.Description = "From: " + m.Name + " - " + '\n' +
         // Type metadata text here
         "current year to date, latest YTD is up to date today"
         ;                             
-        m3.FormatString = Currency0
+        m11.FormatString = Currency0
         ;
 // endSubScript
 /**************************************** MeasureEnd **************************************/
 
 /***************************************** MeasureStart ************************************/
-// Measure5: YTD CML
-    var m5 = m.Table.AddMeasure
+// Measure12: YTD CML
+    var m12 = m.Table.AddMeasure
     (                             
 
 // startSubScript
@@ -704,21 +707,25 @@ foreach(var m in Selected.Measures)
         
 // Metadata
         // Display Folder (default - same folder as selected)
-        m5.DisplayFolder 
+        m12.DisplayFolder 
         // Optional: new Folder name below
         = subFolder
         ;      
     
 // Provide some documentation
-        m5.Description = "From: " + m.Name + " - " + '\n' +
+        m12.Description = "From: " + m.Name + " - " + '\n' +
         // Type metadata text here
         "cumulative measure; "
         ;                             
-        m5.FormatString = Currency0
+        m12.FormatString = Currency0
         ;
 // endSubScript
 /**************************************** MeasureEnd **************************************/
 }
 /**** C# SCRIPT END ****/
+
+
+
+
 
 ```
