@@ -1,11 +1,6 @@
 # TimeIntel Measures (£)
 
 ```c#
-
-
-
-
-
   
 /*---------------------------------------------------
 | TITLE:                                             |
@@ -149,7 +144,7 @@ foreach(var m in Selected.Measures)
         // Type metadata text here
         " Base Measure; SUM (Snapshot) "
         ;                             
-        m1.FormatString = Currency0
+        m1.FormatString = Decimal
         ;
 // endSubScript
 /**************************************** MeasureEnd **************************************/
@@ -200,7 +195,7 @@ foreach(var m in Selected.Measures)
         // Type metadata text here
         "cumulative measure; until MAX date variable"
         ;                             
-        m2.FormatString = Currency0
+        m2.FormatString = Decimal
         ;
 // endSubScript
 /**************************************** MeasureEnd **************************************/
@@ -251,7 +246,7 @@ foreach(var m in Selected.Measures)
         // Type metadata text here
         "current year to date, latest YTD is up to date today"
         ;                             
-        m3.FormatString = Currency0
+        m3.FormatString = Decimal
         ;
 // endSubScript
 /**************************************** MeasureEnd **************************************/
@@ -302,7 +297,7 @@ foreach(var m in Selected.Measures)
         // Type metadata text here
         "current fiscal year to date, latest YTD is up to date today"
         ;                             
-        m4.FormatString = Currency0
+        m4.FormatString = Decimal
         ;
 // endSubScript
 /**************************************** MeasureEnd **************************************/
@@ -353,7 +348,7 @@ foreach(var m in Selected.Measures)
         // Type metadata text here
         "cumulative measure; continuous until max calendar date"
         ;                             
-        m5.FormatString = Currency0
+        m5.FormatString = Decimal
         ;
 // endSubScript
 /**************************************** MeasureEnd **************************************/
@@ -407,7 +402,7 @@ foreach(var m in Selected.Measures)
         // Type metadata text here
         "current fiscal year to date, latest YTD is up to date today"
         ;                             
-        m6.FormatString = Currency0
+        m6.FormatString = Decimal
         ;
 // endSubScript
 /**************************************** MeasureEnd **************************************/
@@ -456,7 +451,7 @@ foreach(var m in Selected.Measures)
         // Type metadata text here
         "remaining future values beyond the latest complete MTD"
         ;                             
-        m7.FormatString = Currency0
+        m7.FormatString = Decimal
         ;
 // endSubScript
 /**************************************** MeasureEnd **************************************/
@@ -513,7 +508,7 @@ foreach(var m in Selected.Measures)
         // Type metadata text here
         "actual YTD and future forecast"
         ;                             
-        m8.FormatString = Currency0
+        m8.FormatString = Decimal
         ;
 // endSubScript
 /**************************************** MeasureEnd **************************************/
@@ -567,7 +562,7 @@ foreach(var m in Selected.Measures)
         // Type metadata text here
         "cumulative measure; continuous until max calendar date"
         ;                             
-        m9.FormatString = Currency0
+        m9.FormatString = Decimal
         ;
 // endSubScript
 /**************************************** MeasureEnd **************************************/
@@ -622,7 +617,7 @@ foreach(var m in Selected.Measures)
         // Type metadata text here
         "current fiscal year to date, latest YTD is up to date today"
         ;                             
-        m10.FormatString = Currency0
+        m10.FormatString = Decimal
         ;
 // endSubScript
 /**************************************** MeasureEnd **************************************/
@@ -672,7 +667,7 @@ foreach(var m in Selected.Measures)
         // Type metadata text here
         "current year to date, latest YTD is up to date today"
         ;                             
-        m11.FormatString = Currency0
+        m11.FormatString = Decimal
         ;
 // endSubScript
 /**************************************** MeasureEnd **************************************/
@@ -722,19 +717,11 @@ foreach(var m in Selected.Measures)
         // Type metadata text here
         "cumulative measure; "
         ;                             
-        m12.FormatString = Currency0
+        m12.FormatString = Decimal
         ;
 // endSubScript
 /**************************************** MeasureEnd **************************************/
 }
 /**** C# SCRIPT END ****/
-
-
-
-
-
-
-
-
 
 ```
