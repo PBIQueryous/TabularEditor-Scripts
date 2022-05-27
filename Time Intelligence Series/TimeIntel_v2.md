@@ -4,6 +4,8 @@
 
 
 
+
+
   
 /*---------------------------------------------------
 | TITLE:                                             |
@@ -62,11 +64,14 @@ var Deviation = "+"+Decimal+";" +"-"+Decimal+";"+ Decimal;
 
 // Var RETURN text strings
 var vResult = "var _result = ";
+var rResult = '\t' + "_result";
 var rReturnResult = "RETURN" + '\n' + '\t' + "_result";
 var rReturn = "RETURN" + '\n';
+var rReturnA1 = rReturn + '\n' + "// " + rResult;
+var rReturnA2 = rReturn + '\n' + rResult;
 var ifnotBlank = '\t' + "IF(  NOT ISBLANK( ";
 var thenResult = " ) ,  _result  )";
-var rResult = '\t' + "_result";
+
 
 // MeasureName Variables
 var snap = " | SNAP";
@@ -175,7 +180,7 @@ foreach(var m in Selected.Measures)
         + datesDate + " <= " + maxDate + " )" + '\n'     // filter
         
         // Return Expression
-        + '\n' + "// " + rReturnResult
+        + '\n' + rReturnA1
         
         // optional in DAX
         // useful in cumulative measures - returns blank if no value exists for future dates
@@ -221,16 +226,16 @@ foreach(var m in Selected.Measures)
         + '\n' + vResult + 
         
         // DAX Expression
-        calculate + "[" + m.Name + snap + "], "          // calculate
+        calculate + "[" + m.Name + snap + "] "          // calculate
         // filter context
-        + "/* " + isCYTD + " */" + " )" + '\n'                          // filter
+        + " /* , " + isCYTD + " */" + " )" + '\n'                          // filter
         
         // Return Expression
-        + '\n' + rReturnResult
+        + '\n' + rReturnA1
         
         // optional in DAX
         // useful in cumulative measures - returns blank if no value exists for future dates
-        + '\n' + "// " + ifnotBlank + m.DaxObjectName + thenResult
+        + '\n' + ifnotBlank + m.DaxObjectName + thenResult
         );
 /* DAX expression END */
         
@@ -253,7 +258,7 @@ foreach(var m in Selected.Measures)
 
 
 /***************************************** MeasureStart ************************************/
-// Measure4: CYTD
+// Measure4: CFYTD
     var m4 = m.Table.AddMeasure
     (                             
 
@@ -277,7 +282,7 @@ foreach(var m in Selected.Measures)
         + "KEEPFILTERS( " + datesDate+ " <= " + mtdDate + " ), " + isCFY + " )" // filter
         
         // Return Expression
-        + '\n' + rReturnResult
+        + '\n' + rReturnA1
         
         // optional in DAX
         // useful in cumulative measures - returns blank if no value exists for future dates
@@ -328,7 +333,7 @@ foreach(var m in Selected.Measures)
         + datesDate + " <= " + maxDate + " )" + '\n'     // filter
         
         // Return Expression
-        + '\n' + rReturnResult
+        + '\n' + rReturnA1
         
         // optional in DAX
         // useful in cumulative measures - returns blank if no value exists for future dates
@@ -382,7 +387,7 @@ foreach(var m in Selected.Measures)
         + '\n' + '\t' + datesDate + " <= " + maxDate + ")"
         
         // Return Expression
-        + '\n' + rReturnResult
+        + '\n' + rReturnA1
         
         // optional in DAX
         // useful in cumulative measures - returns blank if no value exists for future dates
@@ -435,7 +440,7 @@ foreach(var m in Selected.Measures)
         + '\n'
         
         // Return Expression
-        + '\n' + rReturnResult
+        + '\n' + rReturnA2
         );
 /* DAX expression END */
         
@@ -492,7 +497,7 @@ foreach(var m in Selected.Measures)
         + '\n'
         
         // Return Expression
-        + '\n' + rReturnResult
+        + '\n' + rReturnA1
         );
 /* DAX expression END */
         
@@ -542,7 +547,7 @@ foreach(var m in Selected.Measures)
          + '\n'     
         
         // Return Expression
-        + '\n' + rReturnResult
+        + '\n' + rReturnA1
         
         // optional in DAX
         // useful in cumulative measures - returns blank if no value exists for future dates
@@ -597,7 +602,7 @@ foreach(var m in Selected.Measures)
         + '\n' + '\t' + datesDate + " <= " + maxDate + ")"
         
         // Return Expression
-        + '\n' + rReturnResult
+        + '\n' + rReturnA1
         
         // optional in DAX
         // useful in cumulative measures - returns blank if no value exists for future dates
@@ -642,16 +647,16 @@ foreach(var m in Selected.Measures)
         + '\n' + vResult + 
         
         // DAX Expression
-        calculate + "[" + m.Name + snap + "], "          // calculate
+        calculate + "[" + m.Name + snap + "] "          // calculate
         // filter context
-        + "/* " + isCYTD + " */" + " )" + '\n'                          // filter
+        + "/* , " + isCYTD + " */" + " )" + '\n'                          // filter
         
         // Return Expression
-        + '\n' + rReturnResult
+        + '\n' + rReturnA1
         
         // optional in DAX
         // useful in cumulative measures - returns blank if no value exists for future dates
-        + '\n' + "// " + ifnotBlank + m.DaxObjectName + thenResult
+        + '\n' + ifnotBlank + m.DaxObjectName + thenResult
         );
 /* DAX expression END */
         
@@ -697,7 +702,7 @@ foreach(var m in Selected.Measures)
         + datesDate + " <= " + maxDate + " )" + '\n'     // filter
         
         // Return Expression
-        + '\n' + "// " + rReturnResult
+        + '\n' + rReturnA1
         
         // optional in DAX
         // useful in cumulative measures - returns blank if no value exists for future dates
@@ -723,6 +728,10 @@ foreach(var m in Selected.Measures)
 /**************************************** MeasureEnd **************************************/
 }
 /**** C# SCRIPT END ****/
+
+
+
+
 
 
 
