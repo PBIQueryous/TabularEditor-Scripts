@@ -35,7 +35,7 @@
 //-- Quotation Character - helpful for wrapping " " around a text string within the DAX code
 const string qt = "\"";
 var lf = '\n';
-
+String str = "'";
 
 // Number Formatting Strings
 var DateFormat = "dd/MM/yy";
@@ -64,13 +64,15 @@ foreach(var c in Selected.Columns)
 /***************************************** MeasureStart ************************************/
 //-- Measure1: Placeholder for Last Visible Date --\\
 
+    var _tableNameDefault = c.DaxTableName;
+    var _TableNameCleaned = _tableNameDefault.Replace("'","").ToUpper();
     var _maxAvailableDate = "var _maxAvailableDate = CALCULATE ( MAX ( " + c.DaxObjectFullName + " ) , REMOVEFILTERS() )";
     var newMeasure = c.Table.AddMeasure
     (                             
 
 // startSubScript
         //-- MeasureName
-        "@MaxVisibleDate" + c.DaxTableName	,                             
+        "@VisibleDates" + _TableNameCleaned,                            
     
         //-- DAX comment string
         lf + 
@@ -122,6 +124,8 @@ foreach(var c in Selected.Columns)
 
 }
 /**** C# SCRIPT END ****/
+
+
 
 
 ```
