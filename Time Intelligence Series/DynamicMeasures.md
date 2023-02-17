@@ -161,8 +161,12 @@ string ytdCml = "| YTD CML"                 ;       //-- cumulative year to date
 string remCml = "| REM CML"                 ;       //-- cumulative remaining
 string fytd = "| FYTD"                      ;       //-- fiscal year to date
 string aytd = "| AYTD"                      ;       //-- academic year to date
+string cfytd = "| CFYTD"               ;       //-- cumulative fiscal year to date
+string caytd = "| CAYTD"               ;       //-- cumulative fiscal year to date
 string fytdCml = "| FYTD CML"               ;       //-- cumulative fiscal year to date
 string aytdCml = "| AYTD CML"               ;       //-- cumulative fiscal year to date
+string rfytdCml = "| RFYTD CML"               ;       //-- cumulative fiscal year to date
+string raytdCml = "| RAYTD CML"               ;       //-- cumulative fiscal year to date
 string pytd = "| PYTD"                      ;       //-- previous year to date
 string pfytd = "| PFYTD"                    ;       //-- previous fiscal year to date
 string paytd = "| PAYTD"                    ;       //-- previous academic year to date
@@ -206,7 +210,7 @@ string paytdCml = "| PAYTD CML"             ;       //-- cumulative previous aca
 /* ************************ FROM THIS POINT ****************************** */
 
 // all meta data and dax expressions are defined by the selected affix name below
-    var _affixName          = remCml	                                ;       //-- ASSIGN DESIRED MEASURE HERE
+    var _affixName          = rfytdCml	                                ;       //-- ASSIGN DESIRED MEASURE HERE
     var vNew_MeasureName    = vMeasureRenamed + _affixName          ;       //-- new measure name + affix
     string _daxExpression   = null                                  ;       //-- empty dax expression assigned by test below
 
@@ -295,6 +299,20 @@ string paytdCml = "| PAYTD CML"             ;       //-- cumulative previous aca
             + __
             ;
 
+    var _caytd = __ +
+
+             var_ + ts_Result + 
+            "= CALCULATE ( " +vFullDAXObject+ ", " + isCurrentAYTD	 + " )"	            
+            + __
+            ;
+
+    var _cfytd = __ +
+
+             var_ + ts_Result + 
+            "= CALCULATE ( " +vFullDAXObject+ ", " + isCurrentFYTD	 + " )"	            
+            + __
+            ;
+
     var _rem = __ +
              var_ + ts_Result + 
             "= CALCULATE ( " +m.DaxObjectFullName+ ", " + isAfterToday	+ " )"	            
@@ -326,10 +344,13 @@ string paytdCml = "| PAYTD CML"             ;       //-- cumulative previous aca
             "= IF( ISBLANK ( " + ts_Result + " ) , 0 , " + ts_Result + " ) -- return zero for KPI cards"
             + __;
 
+    
     var _fytd = _mYTDCML    ;
     var _aytd = _mYTDCML    ;
     var _fytdCml = _mYTDCML    ;
     var _aytdCml = _mYTDCML    ;
+    var _rfytdCml = _mYTDCML    ;
+    var _raytdCml = _mYTDCML    ;
     var _pytd = _mYTDCML    ;
     var _pfytd = ""    ;
     var _paytd = ""    ;
@@ -349,8 +370,12 @@ string paytdCml = "| PAYTD CML"             ;       //-- cumulative previous aca
     else if (_affixName.Equals(remCml))     vDAX_Expression = _remCml       ;
     else if (_affixName.Equals(fytd))       vDAX_Expression = _fytd         ;
     else if (_affixName.Equals(aytd))       vDAX_Expression = _aytd         ;
+    else if (_affixName.Equals(cfytd))       vDAX_Expression = _cfytd         ;
+    else if (_affixName.Equals(caytd))       vDAX_Expression = _caytd         ;
     else if (_affixName.Equals(fytdCml))    vDAX_Expression = _fytdCml      ;
     else if (_affixName.Equals(aytdCml))    vDAX_Expression = _aytdCml      ;
+    else if (_affixName.Equals(rfytdCml))    vDAX_Expression = _fytdCml      ;
+    else if (_affixName.Equals(raytdCml))    vDAX_Expression = _aytdCml      ;
     else if (_affixName.Equals(pytd))       vDAX_Expression = _pytd         ;
     else if (_affixName.Equals(pfytd))      vDAX_Expression = _pfytd        ;
     else if (_affixName.Equals(paytd))      vDAX_Expression = _paytd        ;
@@ -403,6 +428,7 @@ string paytdCml = "| PAYTD CML"             ;       //-- cumulative previous aca
 }
 /********************************************************************************* C# MeasureEnd */
 /**** C# SCRIPT END ****/
+
 
 
 
