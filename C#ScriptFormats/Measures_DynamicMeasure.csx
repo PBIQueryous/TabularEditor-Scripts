@@ -11,7 +11,17 @@
 
 
 //--- C# measure formula template ---\\
-/* m.Table.AddMeasure( "MeasureName", "Expression", m.DisplayFolder); */
+/* 
+foreach( var m in Selected.Measures) 
+
+{
+  m.Table.AddMeasure(
+      "MeasureName", 
+      "Expression", 
+      m.DisplayFolder)
+      ;
+} 
+*/
 
 
  /* DESCRIPTION
