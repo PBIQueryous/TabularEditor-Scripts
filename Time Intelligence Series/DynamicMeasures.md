@@ -210,7 +210,7 @@ string paytdCml = "| PAYTD CML"             ;       //-- cumulative previous aca
 /* ************************ FROM THIS POINT ****************************** */
 
 // all meta data and dax expressions are defined by the selected affix name below
-    var _affixName          = fytdCml	                                ;       //-- ASSIGN DESIRED MEASURE HERE
+    var _affixName          = aytd	                                ;       //-- ASSIGN DESIRED MEASURE HERE
     var vNew_MeasureName    = vMeasureRenamed + _affixName          ;       //-- new measure name + affix
     string _daxExpression   = null                                  ;       //-- empty dax expression assigned by test below
 
