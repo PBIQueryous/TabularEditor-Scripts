@@ -153,6 +153,7 @@ foreach(var m in Selected.Measures)
 //- Measure1 Title: CUMULATIVE SUM FISCAL YTD: -----------------------------------------\\
 /* Annotation Measure **************************************************************************/
 // define affixes for each measure type
+string amt = "| AMT"                        ;       //-- amount
 string act = "| ACT"                        ;       //-- actual
 string ytd = "| YTD"                        ;       //-- year to date
 string cml = "| CML"                        ;       //-- cumulatvive
@@ -210,7 +211,7 @@ string paytdCml = "| PAYTD CML"             ;       //-- cumulative previous aca
 /* ************************ FROM THIS POINT ****************************** */
 
 // all meta data and dax expressions are defined by the selected affix name below
-    var _affixName          = aytd	                                ;       //-- ASSIGN DESIRED MEASURE HERE
+    var _affixName          = amt	                                ;       //-- ASSIGN DESIRED MEASURE HERE
     var vNew_MeasureName    = vMeasureRenamed + _affixName          ;       //-- new measure name + affix
     string _daxExpression   = null                                  ;       //-- empty dax expression assigned by test below
 
@@ -271,6 +272,13 @@ string paytdCml = "| PAYTD CML"             ;       //-- cumulative previous aca
             + __;
 
 /* Dax Expressions contain in a variable *******************************************************/
+       var _amt = __ +
+             var_ + ts_Result + 
+            "= " + vFullDAXObject
+            + __
+            ;
+
+
     var _act = __ +
              var_ + ts_Result + 
             "= " +m.DaxObjectFullName	            
@@ -362,7 +370,8 @@ string paytdCml = "| PAYTD CML"             ;       //-- cumulative previous aca
 // test to check affix and return the corresponding measure
     string vDAX_Expression = null ;
 
-    if (_affixName.Equals(act))             vDAX_Expression = _act          ;
+    if (_affixName.Equals(amt))             vDAX_Expression = _amt          ;
+    else if (_affixName.Equals(act))        vDAX_Expression = _act          ;
     else if (_affixName.Equals(ytd))        vDAX_Expression = _ytd          ;
     else if (_affixName.Equals(cml))        vDAX_Expression = _cml          ;
     else if (_affixName.Equals(rem))        vDAX_Expression = _rem          ;        
@@ -428,6 +437,7 @@ string paytdCml = "| PAYTD CML"             ;       //-- cumulative previous aca
 }
 /********************************************************************************* C# MeasureEnd */
 /**** C# SCRIPT END ****/
+
 
 
 
